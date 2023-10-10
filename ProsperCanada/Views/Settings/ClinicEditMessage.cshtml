@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ClinicEditMessage";
+}
+
+<h2>ClinicEditMessage</h2>
+
+
+@using (Html.BeginForm("ClinicEditMessage", "Settings", FormMethod.Post))
+{
+
+    foreach (var item in Model.MessageList)
+    {
+        <div class="form-group ">
+            <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="Title" value="@item.clinicMessageTitle">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <textarea id="inputDescription" name="inputDescription" class="form-control" rows="3">@item.clinicDescription</textarea>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="selectActive" class="col-sm-2 col-form-label">Active</label>
+            <div class="col-sm-10">
+                <select id="selectActive" name="selectActive" class="form-control">
+
+                    @if (item.clinicMessageActive == 1)
+                    {
+                        <option value="0">No</option>
+                        <option value="1" selected>Yes</option>
+                    }
+                    else
+                    {
+                        <option value="0" selected>No</option>
+                        <option value="1">Yes</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+
+        <br />
+        <div class="form-group ">
+            <input type="text" class="form-control" id="inputMessageId" name="inputMessageId" placeholder="Message Id" value="@item.clinicMessageId">
+            <input type="text" class="form-control" id="inputClinicId" name="inputClinicId" placeholder="Message Id" value="@item.clinicId">
+            <input type="text" class="form-control" id="inputClinicType" name="inputClinicType" placeholder="Message Id" value="@item.clinicType">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    }
+}

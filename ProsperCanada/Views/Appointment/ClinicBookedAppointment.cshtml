@@ -1,0 +1,17 @@
+﻿@model List<ProsperCanada.Models.ClinicMessage>
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "ClinicBookedAppointment";
+}
+
+<h2>Booked Appointment</h2>
+<h3>@ViewBag.ClinicName</h3>
+@ViewBag.Id
+
+
+    <p>Eligibility: @ViewBag.eligibilityDesc</p>
+    <p>Instruction: @ViewBag.instructionDesc</p>
+
+    <p>@ViewBag.ErrorMessage</p>

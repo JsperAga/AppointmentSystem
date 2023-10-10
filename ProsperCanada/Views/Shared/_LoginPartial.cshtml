@@ -1,0 +1,39 @@
+﻿@model ProsperCanada.Models.ModelMix
+@using System.Web.Mvc.Html
+<script>
+    function jasper() {
+        var fnc = confirm("Do you really want to logout?");
+        alert(fnc);
+        if (fnc == true) {
+            return true;
+        } else {
+            return true;
+        }
+    }
+</script>
+
+
+
+
+@if (!string.IsNullOrEmpty(ViewBag.name))
+{
+    <ul class="navbar-nav navbar-right ">
+        <a href="~/Account/ManageAppointment" class="nav-link">@ViewBag.name</a>
+        <a href="~/Account/Logout" class="nav-link">Logout</a>
+    </ul>
+}
+else
+{
+<ul class="navbar-nav navbar-right ">
+    @foreach (var item in Model.ChannelListLogin)
+    {
+        <li>@Html.ActionLink(item.channelName, item.channelLocation, item.channelController, new { area = "" }, new { @class = "nav-link" })</li>
+    }
+</ul>
+}
+
+
+@*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>*@
+
+

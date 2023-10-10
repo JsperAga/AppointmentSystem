@@ -1,0 +1,40 @@
+﻿@model ProsperCanada.Models.ModelMix
+@{
+    ViewBag.Title = "Family Type Add";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("FamilyTypeAdd", "Settings", FormMethod.Post))
+{
+    @Model.Message
+    <div class="form-group ">
+        <label for="inputFamilyType" class="col-sm-2 col-form-label">Family Type</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputFamilyType" name="inputFamilyType" placeholder="Tax Year">
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <textarea id="inputDescription" name="inputDescription" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="selectActive" class="col-sm-2 col-form-label">Active</label>
+        <div class="col-sm-10">
+            <select id="selectActive" name="selectActive">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group ">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}
+
+

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Clinic Agent";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">@ViewBag.Title</h2>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Add Agent", "AgentAdd", "Settings", new { area = "", id = ViewBag.ID }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contact number</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserList)
+        {
+            <tr>
+                <th scope="row"></th>
+                <td>@item.userFullName</td>
+                <td>@item.userEmailAddress</td>
+                <td>@item.userContactNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>

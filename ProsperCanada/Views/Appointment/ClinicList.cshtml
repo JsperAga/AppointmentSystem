@@ -1,0 +1,51 @@
+﻿@model ProsperCanada.Models.ModelMix
+
+@{
+    ViewBag.Title = "Clinic Appointment";
+}
+
+@ViewBag.name
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">@ViewBag.Title</h2>
+
+            @*<ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Clinic Add", "ClinicAdd", "Settings", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>*@
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+
+        <tr>
+            <th scope="col">Clinic Name</th>
+            <th scope="col">Street</th>
+            <th scope="col">Unit</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Country</th>
+            <th scope="col">PostalCode</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClinicList)
+        {
+            <tr>
+
+                <td scope="row"><a onclick="Booking('@item.clinicId')" id="booking" style="cursor:pointer;padding-left:5px;">@item.clinicName</a></td>
+                <td>@item.clinicStreetName</td>
+                <td>@item.clinicUnit</td>
+                <td>@item.clinicCity</td>
+                <td>@item.clinicState</td>
+                <td>@item.clinicCountry</td>
+                <td>@item.clinicPostalCode</td>
+                <td>@Html.ActionLink("Book", "AppointmentBooking", "Appointment", new { area = "", id = item.clinicId }, new { @class = "nav-link" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

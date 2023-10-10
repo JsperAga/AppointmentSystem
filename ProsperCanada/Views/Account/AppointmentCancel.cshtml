@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Appointment Cancel";
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<style>
+
+    /* Style the select box */
+    .custom-select {
+        width: 50%; /* Set the width to 100% or a specific value */
+        background-color: #f5f5f5; /* Background color */
+        border: 1px solid #ccc; /* Border color */
+        border-radius: 4px; /* Border radius */
+        padding: 10px; /* Padding */
+    }
+
+        /* Style the dropdown menu */
+        .custom-select:focus {
+            border-color: #007bff; /* Border color on focus */
+            outline: 0; /* Remove the blue outline */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a subtle box shadow on focus */
+        }
+
+        /* Style the selected options */
+        .custom-select option {
+            background-color: #f5f5f5; /* Background color of options */
+            color: #333; /* Text color of options */
+        }
+
+            /* Style the selected options on hover */
+            .custom-select option:hover {
+                background-color: #007bff; /* Background color on hover */
+                color: #fff; /* Text color on hover */
+            }
+
+    fieldset {
+        border: 1px solid #ddd !important;
+        margin: 0;
+        xmin-width: 0;
+        padding: 10px;
+        position: relative;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        padding-left: 10px !important;
+    }
+
+    legend {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        width: 35%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 5px 5px 10px;
+        background-color: #ffffff;
+    }
+
+    input.hidden {
+        border: none;
+        background: transparent;
+    }
+</style>
+<h2>@ViewBag.Title</h2>
+
+@ViewBag.Id
+
+<div class="container body-content">
+    @using (Html.BeginForm("AppointmentCancel", "Account", FormMethod.Post))
+    {
+        foreach (var item in Model.ClinicAdmin)
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <input type="text" name="appointmentId" value="@item.appointmentId" />
+                    Clinic Name: @item.clinicName
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Client name: @item.appointmentContactName
+                </div>
+                <div class="col-sm">
+                    Client Email: @item.appointmentContactEmail
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Contact Number: @item.appointmentContactNumber
+                </div>
+
+            </div>
+
+            <hr />
+            <div class="row">
+                <div class="col-sm">
+                    Appointment Date: @item.appointmentContactDate
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Time Start: @item.appointmentContactTimeStart
+                </div>
+                <div class="col-sm">
+                    Time End: @item.appointmentContactTimeEnd
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm">
+                    Tax Year: @item.clinicTaxYearId
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Language: @item.clinicLanguageId
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Family Type: @item.clinicFamilyTypeId
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Meeting Type: @item.clinicMeetingTypeId
+                </div>
+            </div>
+
+
+        }
+        <hr />
+        <fieldset>
+            <div class="form-group ">
+                <label for="inputName" class="col-sm col-form-label">Cancel Reason</label>
+                <div class="col-sm">
+                    <textarea class="form-control" id="cancelReason" name="cancelReason" rows="3"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="form-group ">
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+
+
+    }
+</div>
+@Scripts.Render("/bundles/jquery")
+@Scripts.Render("/bundles/bootstrap")

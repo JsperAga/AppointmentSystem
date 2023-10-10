@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "ClinicViewEligibility";
+}
+
+@*<script>
+    jQuery.noConflict();
+    // Now, use jQuery instead of $ in your code
+
+    function activeMode(id) {
+
+
+        jQuery.ajax({
+
+            cache: false,
+            url: "@Url.Action("SetupMessageUpdateActive", "Setup", new { Area = "Setup" })" + "?clinicMessageId=" + id,
+
+
+            success: function (msg) {
+                // $("#admtext").html(msg);
+
+                //alert(msg);
+                //if (msg != "Active") {
+                    //alert(msg);
+                    if (msg == 1) {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/active.png';
+                    } else {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/deactive.png';
+                    }
+                //} else {
+                //    alert('invalid');
+                //}
+            }
+
+
+        });
+
+
+    }
+
+</script>*@
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">Clinic View Eligibility</h2>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Add Eligibility", "EligibilityAdd", "Settings", new { area = "", id = ViewBag.ID }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Message Title</th>
+            <th scope="col">Active</th>
+            <th scope="col">Edit</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MessageList)
+        {
+            <tr>
+                <th scope="row"></th>
+                <td>@item.clinicMessageTitle</td>
+                <td>
+
+                      @*<a onclick="activeMode('@item.clinicMessageId')" style="cursor:pointer">*@
+
+
+                            @if (item.clinicMessageActive == 1)
+                            {
+                                <img src="~/Scripts/images/active.png" class="rounded" id="Img-@item.clinicMessageId" alt="..." height="20">
+                            }
+
+                            else if (item.clinicMessageActive == 0)
+                            {
+                                <img src="~/Scripts/images/deactive.png" class="rounded" id="Img-@item.clinicMessageId" alt="..." height="20">
+                            }
+                            else
+                            {
+                                <img src="~/Scripts/images/delete.png" class="rounded" id="Img-@item.clinicMessageId" alt="..." height="20">
+                            }
+
+
+                        @*</a>*@
+                   
+
+                </td>
+                <td>@Html.ActionLink("Edit", "ClinicEditMessage", "Settings", new { area = "", id = item.clinicMessageId }, new { @class = "nav-link" })</td>
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>

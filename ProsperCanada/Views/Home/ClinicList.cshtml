@@ -1,0 +1,31 @@
+﻿@model ProsperCanada.Models.ModelMix
+
+<h2>Clinic List</h2>
+
+
+    <table>
+        <tr>
+            <th>Clinic Name</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>TK Access</th>
+            <th>Countsup</th>
+            <th>HR Status</th>
+            <th>User Type</th>
+        </tr>
+        @foreach (var item in Model.ClinicList)
+        {
+            <tr>
+                <td>@item.clinicId</td>
+                <td><a onclick="Booking('@item.clinicId')" id="booking" style="cursor:pointer;padding-left:5px;">@item.clinicName</a></td>
+                <td>@item.clinicStreetName</td>
+                <td>@item.clinicUnit</td>
+                <td>@item.clinicCity</td>
+                <td>@item.clinicState</td>
+                <td>@item.clinicCountry</td>
+                <td>@item.clinicPostalCode</td>
+
+            </tr>
+        }
+    </table>

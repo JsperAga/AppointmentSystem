@@ -1,0 +1,164 @@
+﻿
+@model ProsperCanada.Models.ModelMix
+@{
+    ViewBag.Title = "Family Type";
+}
+
+<script>
+    jQuery.noConflict();
+    // Now, use jQuery instead of $ in your code
+
+    function activeMode(id) {
+
+
+        jQuery.ajax({
+
+            cache: false,
+            url: "@Url.Action("SetupUpdateActive", "Setup", new { Area = "Setup" })" + "?settingId=" + id,
+
+
+            success: function (msg) {
+                // $("#admtext").html(msg);
+                //  alert(msg);
+                if (msg != "Active") {
+
+                    if (msg == 1) {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/active.png';
+                    } else {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/deactive.png';
+                    }
+                    document.getElementById('linkDelete-' + id).innerHTML = "Delete";
+
+                } else {
+                    alert('invalid');
+                }
+            }
+
+
+        });
+
+
+    }
+
+    function activeDeleteMode(id) {
+        var fnc = confirm("Do you really want to this action on this Family Type?");
+        // alert(a);
+        if (fnc == true) {
+            jQuery.ajax({
+            cache: false,
+            url: "@Url.Action("SetupActiveDelete", "Setup", new { Area = "Setup" })" + "?settingId=" + id,
+
+
+            success: function (msg) {
+                // $("#admtext").html(msg);
+                //  alert(msg);
+                if (msg != "Active") {
+
+                    if (msg == 1) {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/active.png';
+                        document.getElementById('linkDelete-'+id).innerHTML = "Delete";
+                    } else if (msg == 0) {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/deactive.png';
+                    } else {
+                        document.getElementById('Img-' + id).src = '/Scripts/images/delete.png';
+                        document.getElementById('linkDelete-'+id).innerHTML = "Activate";
+                    }
+
+
+
+                } else {
+                    alert('invalid');
+                }
+            }
+
+
+            });
+        } else {
+            return true;
+        }
+    }
+
+</script>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">@ViewBag.Title</h2>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Family Type Add", "FamilyTypeAdd", "Settings", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Family Type Name</th>
+            <th scope="col">Family Type Type</th>
+            <th scope="col">Active</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SettingsList)
+        {
+            <tr>
+                <th scope="row"> </th>
+                <td>@item.settingsName</td>
+                <td>@item.settingsType</td>
+                <td>
+
+                    @if (item.settingsActive != 9)
+                    {
+                        <a onclick="activeMode('@item.settingsId')" style="cursor:pointer">
+
+
+                            @if (item.settingsActive == 1)
+                            {
+                                <img src="~/Scripts/images/active.png" class="rounded" id="Img-@item.settingsId" alt="..." height="20">
+                            }
+
+                            else if (item.settingsActive == 0)
+                            {
+                                <img src="~/Scripts/images/deactive.png" class="rounded" id="Img-@item.settingsId" alt="..." height="20">
+                            }
+                            else
+                            {
+                                <img src="~/Scripts/images/delete.png" class="rounded" id="Img-@item.settingsId" alt="..." height="20">
+                            }
+
+
+                        </a>
+                    }
+                    else
+                    {
+                        <a onclick="activeDeleteMode('@item.settingsId')" style="cursor:pointer" id="linkDelete-@item.settingsId">
+                            <img src="~/Scripts/images/delete.png" class="rounded" id="Img-@item.settingsId" alt="..." height="20">
+                        </a>
+                    }
+
+
+
+                </td>
+                <td>@Html.ActionLink("Edit", "FamilyTypeEdit", "Settings", new { area = "", id = item.settingsId }, new { @class = "nav-link" })</td>
+                <td>
+                    @if (item.settingsActive != 9)
+                    {
+                        <a onclick="activeDeleteMode('@item.settingsId')" style="cursor:pointer" id="linkDelete-@item.settingsId">Delete</a>
+                    }
+                    else
+                    {
+                        <a onclick="activeDeleteMode('@item.settingsId')" style="cursor:pointer" id="linkDelete-@item.settingsId">Activate</a>
+                    }
+
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

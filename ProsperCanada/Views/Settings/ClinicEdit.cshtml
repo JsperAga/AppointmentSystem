@@ -1,0 +1,218 @@
+﻿@model ProsperCanada.Models.ModelMix
+@{
+    ViewBag.Title = "ClinicEdit";
+}
+
+<h2>ClinicEdit</h2>
+
+<script>
+
+    window.onmousedown = function (e) {
+        var el = e.target;
+        if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+            e.preventDefault();
+
+            // toggle selection
+            if (el.hasAttribute('selected')) el.removeAttribute('selected');
+            else el.setAttribute('selected', '');
+
+            // hack to correct buggy behavior
+            var select = el.parentNode.cloneNode(true);
+            el.parentNode.parentNode.replaceChild(select, el.parentNode);
+        }
+    }
+
+</script>
+<style>
+
+    /* Style the select box */
+    .custom-select {
+        width: 100%; /* Set the width to 100% or a specific value */
+        background-color: #f5f5f5; /* Background color */
+        border: 1px solid #ccc; /* Border color */
+        border-radius: 4px; /* Border radius */
+        padding: 10px; /* Padding */
+    }
+
+        /* Style the dropdown menu */
+        .custom-select:focus {
+            border-color: #007bff; /* Border color on focus */
+            outline: 0; /* Remove the blue outline */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a subtle box shadow on focus */
+        }
+
+        /* Style the selected options */
+        .custom-select option {
+            background-color: #f5f5f5; /* Background color of options */
+            color: #333; /* Text color of options */
+        }
+
+            /* Style the selected options on hover */
+            .custom-select option:hover {
+                background-color: #007bff; /* Background color on hover */
+                color: #fff; /* Text color on hover */
+            }
+</style>
+
+@using (Html.BeginForm("ClinicEdit", "Settings", FormMethod.Post))
+{
+    foreach (var clinic in Model.ClinicList)
+    {
+        <div class="form-group ">
+            <label for="inputClinicName" class="col-sm-2 col-form-label">Clinic Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputClinicName" name="inputClinicName" placeholder="Clinic Name" value="@clinic.clinicName">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputStreet" class="col-sm-2 col-form-label">Street</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputStreet" name="inputStreet" placeholder="Street" value="@clinic.clinicStreetName">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputUnit" class="col-sm-2 col-form-label">Unit</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUnit" name="inputUnit" placeholder="Unit" value="@clinic.clinicUnit">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputCity" class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCity" name="inputCity" placeholder="City" value="@clinic.clinicCity">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputState" class="col-sm-2 col-form-label">State</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputState" name="inputState" placeholder="State" value="@clinic.clinicState">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputCountry" class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10">
+                <select class="form-select" id="inputCountry" name="inputCountry">
+                    <option>select country</option>
+
+                    @foreach (var country in Model.CountryList)
+                    {
+                        if (clinic.clinicCountry == country.countryCode)
+                        {
+                            ViewBag.selected = "selected=selected";
+                           
+                        } else
+                        {
+                            ViewBag.selected = "";
+                        }
+
+
+                        <option value="@country.countryCode" @ViewBag.selected>@country.countryName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="inputPostalCode" class="col-sm-2 col-form-label">Postal Code</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPostalCode" name="inputPostalCode" placeholder="Postal Code" value="@clinic.clinicPostalCode">
+            </div>
+        </div>
+    }
+    <div class="form-group ">
+        <label for="inputTaxYear" class="col-sm-2 col-form-label">Tax Year</label>
+        <div class="col-sm-10">
+            <select size="7" multiple name="myTaxYear" id="myTaxYear" class="custom-select">
+                @{
+
+
+                    foreach (var taxYear in Model.TaxYear)
+                    {
+                        ViewBag.selected = "";
+                        foreach (var tax in Model.ClinicTaxYears)
+                        {
+                            if (taxYear.settingsName == tax.clinicTaxYear)
+                            {
+                                ViewBag.selected = "selected";
+                                break;
+                            }
+                        }
+                        <option value="@taxYear.settingsName" @ViewBag.selected>@taxYear.settingsName</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="inputTaxYear" class="col-sm-2 col-form-label">Language</label>
+        <div class="col-sm-10">
+            <select size="7" multiple name="myLanguage" id="myLanguage" class="custom-select">
+                @foreach (var lang in Model.Language)
+                {
+                    ViewBag.selected = "";
+
+                    foreach (var lan in Model.ClinicLanguages)
+                    {
+                        if (lang.settingsName == lan.clinicLanguage)
+                        {
+                            ViewBag.selected = "selected";
+                            break;
+                        } 
+                    }
+                    <option @ViewBag.selected>@lang.settingsName</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <label for="inputMeetingType" class="col-sm-2 col-form-label">Meeting Type</label>
+        <div class="col-sm-10">
+            <select size="7" multiple name="myMeetingType" id="myMeetingType" class="custom-select">
+                @foreach (var meet in Model.MeetingType)
+                {
+                    ViewBag.selected = "";
+
+                    foreach (var met in Model.ClinicMeetingTypes)
+                    {
+                        if (meet.settingsName == met.clinicMeetingType)
+                        {
+                            ViewBag.selected = "selected";
+                            break;
+                        }
+                    }
+                    <option @ViewBag.selected>@meet.settingsName</option>
+                    
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="inputFamilyType" class="col-sm-2 col-form-label">Family Type</label>
+        <div class="col-sm-10">
+            <select size="7" multiple name="myFamilyType" id="myFamilyType" class="custom-select">
+                @foreach (var family in Model.FamilyType)
+                {
+                    ViewBag.selected = "";
+
+                    foreach (var fam in Model.clinicFamilyTypes)
+                    {
+                        if (family.settingsName == fam.clinicFamilyType)
+                        {
+                            ViewBag.selected = "selected";
+                            break;
+                        }
+                    }
+                    <option @ViewBag.selected>@family.settingsName</option>
+                    
+                }
+            </select>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group ">
+        <input type="text" class="form-control" id="inputSettingId" name="inputSettingId" placeholder="Setting Id" value="@ViewBag.Id">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}
+

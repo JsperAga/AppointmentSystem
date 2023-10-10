@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Agent Add";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("AgentAdd", "Settings", FormMethod.Post))
+{
+    @Model.Message
+  
+    
+    <div class="form-group ">
+        <label for="selectUser" class="col-sm-2 col-form-label">User</label>
+        <div class="col-sm-10">
+            <select id="selectUser" name="selectUser" class="form-select">
+                @foreach (var item in Model.UserList)
+                {
+                    <option value="@item.userId">@item.userFullName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="selectRole" class="col-sm-2 col-form-label">Role</label>
+        <div class="col-sm-10">
+            <select id="selectRole" name="selectRole" class="form-select">
+                <option value="1">Agent</option>
+                <option value="2">Clinic Admin</option>
+                <option value="9">System Admin</option>
+            </select>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group ">
+        <input type="text" class="form-control" id="clinicId" name="clinicId" value="@ViewBag.ID">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}

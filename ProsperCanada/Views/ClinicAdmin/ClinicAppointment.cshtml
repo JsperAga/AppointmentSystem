@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Clinic Appointment";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">@ViewBag.Title</h2>
+
+            @*<ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Clinic Add", "ClinicAdd", "Settings", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>*@
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Clinic Name</th>
+            <th scope="col">Assigned Agent</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Tax Year</th>
+            <th scope="col">Language</th>
+            <th scope="col">Family Type</th>
+            <th scope="col">Meeting Type</th>
+            <th scope="col">Assign</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClinicAdmin)
+        {
+            <tr>
+                <td scope="row"> </td>
+                <td>@item.clinicName </td>
+                <td>@item.userFullName</td>
+                <td>@item.appointmentContactDate</td>
+                <td>@item.appointmentContactTimeStart - @item.appointmentContactTimeEnd</td>
+                <td>@item.clinicTaxYearId </td>
+                <td>@item.clinicLanguageId </td>
+                <td>@item.clinicFamilyTypeId </td>
+                <td>@item.clinicMeetingTypeId </td>
+                @if (item.appointmentStatus != 9)
+                {
+                    if (item.userFullName == null)
+                    {
+
+                        <td>@Html.ActionLink("Assign", "AppointmentAssign", "ClinicAdmin", new { area = "", id = item.appointmentId, clinicId = item.clinicId }, new { @class = "nav-link" })</td>
+
+
+                    }
+                    else
+                    {
+                        <td>DONE</td>
+                    }
+                } else
+                {
+                    <td>Cancelled</td>
+                }
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>

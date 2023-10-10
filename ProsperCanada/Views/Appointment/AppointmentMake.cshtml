@@ -1,0 +1,267 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "AppointmentMake";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<h2>AppointmentMake</h2>
+
+
+<script>
+
+    window.onmousedown = function (e) {
+        var el = e.target;
+        if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+            e.preventDefault();
+
+            // toggle selection
+            if (el.hasAttribute('selected')) el.removeAttribute('selected');
+            else el.setAttribute('selected', '');
+
+            // hack to correct buggy behavior
+            var select = el.parentNode.cloneNode(true);
+            el.parentNode.parentNode.replaceChild(select, el.parentNode);
+        }
+    }
+
+    function test() {
+        alert("Appointment Booked!");
+        window.parent.closePopUp();
+    }
+
+</script>
+<style>
+
+    /* Style the select box */
+    .custom-select {
+        width: 50%; /* Set the width to 100% or a specific value */
+        background-color: #f5f5f5; /* Background color */
+        border: 1px solid #ccc; /* Border color */
+        border-radius: 4px; /* Border radius */
+        padding: 10px; /* Padding */
+    }
+
+        /* Style the dropdown menu */
+        .custom-select:focus {
+            border-color: #007bff; /* Border color on focus */
+            outline: 0; /* Remove the blue outline */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a subtle box shadow on focus */
+        }
+
+        /* Style the selected options */
+        .custom-select option {
+            background-color: #f5f5f5; /* Background color of options */
+            color: #333; /* Text color of options */
+        }
+
+            /* Style the selected options on hover */
+            .custom-select option:hover {
+                background-color: #007bff; /* Background color on hover */
+                color: #fff; /* Text color on hover */
+            }
+
+    fieldset {
+        border: 1px solid #ddd !important;
+        margin: 0;
+        xmin-width: 0;
+        padding: 10px;
+        position: relative;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        padding-left: 10px !important;
+    }
+
+    legend {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        width: 35%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 5px 5px 10px;
+        background-color: #ffffff;
+    }
+
+    input.hidden {
+        border: none;
+        background: transparent;
+    }
+</style>
+<body onload="@ViewBag.CloseJs">
+    @using (Html.BeginForm("AppointmentMake", "Appointment", FormMethod.Post))
+    {
+        <div class="container body-content">
+
+            @foreach (var item in Model.ClinicSchedules)
+            {
+                <div class="row">
+                    <div class="col-sm">
+                        Code: @item.clinicScheduleCode
+                    </div>
+
+                    @*<div class="col-sm">
+                            Day: @item.clinicDay
+                        </div>*@
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        Clinic name: @item.clinicName
+                        <input type="text" name="clinicId" value="@item.clinicId" />
+                    </div>
+
+                    @*<div class="col-sm">
+                            Day: @item.clinicDay
+                        </div>*@
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        Appointment Date: <input class="hidden" type="text" name="searchDate" value="@ViewBag.Date" />
+                    </div>
+
+                    <div class="col-sm">
+                        &nbsp;
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="col-sm">
+                            Date Start: @item.clinicDateStart
+                        </div>
+
+                        <div class="col-sm">
+                            Date End: @item.clinicDateEnd
+                        </div>
+                    </div>*@
+
+                <div class="row">
+                    <div class="col-sm">
+                        Time Start:
+                        <input class="hidden" type="text" name="clinicTimeStart" value="@item.clinicTimeStart" />
+                    </div>
+
+                    <div class="col-sm">
+                        Time End: <input class="hidden" type="text" name="clinicTimeEnd" value="@item.clinicTimeEnd" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        Capacity:  @ViewBag.Capacity / @item.clinicCapacity
+                    </div>
+
+
+                </div>
+
+
+            }
+
+            <div class="form-group ">
+                <div class="col-sm">
+                    <label for="inputCode" class="col-sm-2 col-form-label">Tax Year:</label>
+                    <div class="col-sm">
+                        <select size="7" multiple name="taxYear" id="taxYear" class="custom-select">
+                            @foreach (var tax in Model.ClinicScheduleTaxYears)
+                            {
+                                foreach (var tx in tax.clinicTaxYearId.Split(','))
+                                {
+                                    <option> @tx</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group  ">
+                <div class="col-sm">
+                    <label for="inputCode" class="col-sm-2 col-form-label">Language:</label>
+                    <div class="col-sm">
+                        <select name="language" id="language" class="form-select">
+                            @foreach (var lang in Model.ClinicScheduleLanguages)
+                            {
+                                foreach (var ln in lang.clinicLanguageId.Split(','))
+                                {
+                                    <option> @ln</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group  ">
+                <div class="col-sm">
+                    <label for="inputCode" class="col-sm col-form-label">Meeting Type:</label>
+                    <div class="col-sm">
+                        <select name="meetingType" id="meetingType" class="form-select">
+                            @foreach (var meet in Model.ClinicScheduleMeetingTypes)
+                            {
+                                foreach (var mt in meet.clinicMeetingTypeId.Split(','))
+                                {
+                                    <option> @mt</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm">
+                    <label for="inputCode" class="col-sm col-form-label">Family Type:</label>
+                    <div class="col-sm">
+                        <select name="familyType" id="familyType" class="form-select">
+                            @foreach (var fam in Model.clinicScheduleFamilyTypes)
+                            {
+                                foreach (var fm in @fam.clinicFamilyTypeId.Split(','))
+                                {
+                                    <option> @fm</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <fieldset>
+                <div class="form-group ">
+
+                    <legend>Contact Details:</legend><br />
+                    <label for="inputName" class="col-sm col-form-label">Client Name</label>
+
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group ">
+
+
+                    <label for="inputContact" class="col-sm col-form-label">Client Contact number</label>
+
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="inputContactNumber" name="inputContactNumber" placeholder="Contact number">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="inputContactEmail" class="col-sm col-form-label">Client Email</label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="inputContactEmail" name="inputContactEmail" placeholder="Contact Email">
+                    </div>
+                </div> <br />
+                <div class="form-group ">
+
+
+                    <input type="text" name="appointmentId" value="@ViewBag.Id" />
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </fieldset>
+
+        </div>
+    }
+    @Scripts.Render("/bundles/jquery")
+    @Scripts.Render("/bundles/bootstrap")
+</body>
+

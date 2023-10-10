@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Clinic Appointment";
+}
+
+
+
+@*<script>
+        jQuery.noConflict();
+        // Now, use jQuery instead of $ in your code
+
+        function activeMode(id) {
+
+
+            jQuery.ajax({
+
+                cache: false,
+                url: "@Url.Action("SetupMessageUpdateActive", "Setup", new { Area = "Setup" })" + "?clinicMessageId=" + id,
+
+
+                success: function (msg) {
+                    // $("#admtext").html(msg);
+
+                    //alert(msg);
+                    //if (msg != "Active") {
+                        //alert(msg);
+                        if (msg == 1) {
+                            document.getElementById('Img-' + id).src = '/Scripts/images/active.png';
+                        } else {
+                            document.getElementById('Img-' + id).src = '/Scripts/images/deactive.png';
+                        }
+                    //} else {
+                    //    alert('invalid');
+                    //}
+                }
+
+
+            });
+
+
+        }
+
+    </script>*@
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
+            <h2 class="nav navbar-nav navbar-left">@ViewBag.Title</h2>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Add Appointment", "AppointmentAdd", "Settings", new { area = "", id = ViewBag.ID }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Code</th>
+            <th scope="col">Day</th>
+            <th scope="col">Date Start</th>
+            <th scope="col">Date End</th>
+            <th scope="col">Time Start</th>
+            <th scope="col">Time End</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClinicSchedules)
+        {
+            <tr>
+
+                <td scope="row">@item.clinicId</td>
+                <td>@item.clinicScheduleCode</td>
+                <td>@item.clinicDay</td>
+                <td>@item.clinicDateStart</td>
+                <td>@item.clinicDateEnd</td>
+                <td>@item.clinicTimeStart</td>
+                <td>@item.clinicTimeEnd</td>
+                <td>@item.clinicCapacity</td>
+
+                <td scope="row"><a onclick="ViewAppointment('@item.clinicScheduleId')" id="booking" style="cursor:pointer;padding-left:5px;">View</a></td>
+
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>

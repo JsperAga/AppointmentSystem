@@ -1,0 +1,174 @@
+﻿@model ProsperCanada.Models.ModelMix
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<!-- shadowbox -->
+<link rel="stylesheet" type="text/css" href="~/Scripts/shadowbox/shadowbox.css">
+<script type="text/javascript" src="~/Scripts/shadowbox/shadowbox.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-3.7.1.js"></script>
+<script type="text/javascript">
+    Shadowbox.init({
+        // let's skip the automatic setup because we don't have any
+        // properly configured link elements on the page
+        skipSetup: true
+    });
+
+
+</script>
+ @*shadowbox*@ 
+<script type="text/javascript">
+    function Booking(id) {
+
+
+        Shadowbox.open({
+            content: '<div id="welcome-msg" ><iframe src="../Appointment/ClinicBookedAppointment/' + id + '" height="550px" width="1200px" style="border:0"></iframe></div>',
+            player: "html",
+            title: "My Forms",
+            height: 553,
+            width: 1200,
+            options: {
+                modal: true,
+                onClose: myOpen,
+                bgcolor: "#333333"
+            }
+        });
+    }
+
+    function ViewAppointment(id) {
+
+
+        Shadowbox.open({
+            content: '<div id="welcome-msg" ><iframe src="../ClinicAppointmentView/' + id + '" height="550px" width="700px" style="border:0"></iframe></div>',
+            player: "html",
+            title: "My Forms",
+            height: 580,
+            width: 750,
+            options: {
+                modal: true,
+                onClose: myOpen,
+                bgcolor: "#333333"
+            }
+        });
+    }
+
+    function BookedAppointment(id,date) {
+
+
+        Shadowbox.open({
+            content: '<div id="welcome-msg" ><iframe src="../AppointmentMake/' + id + '?date=' + date +'" height="550px" width="700px" style="border:0"></iframe></div>',
+            player: "html",
+            title: "My Forms",
+            height: 580,
+            width: 750,
+            options: {
+                modal: true,
+                onClose: myOpen,
+                bgcolor: "#333333"
+            }
+        });
+    }
+
+    function myOpen() {
+        // alert('ok');
+        Shadowbox.close();
+        //document.getElementById('content').contentWindow.location.reload();
+    }
+
+    
+
+</script>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("Jasper Project", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                @*<ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("ClinicList", "ClinicList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>*@
+
+                <ul class="navbar-nav flex-grow-1">
+
+
+                    @if (!string.IsNullOrEmpty(ViewBag.name))
+                    {
+                        foreach (var item in Model.ChannelList)
+                        {
+
+                            <li>@Html.ActionLink(item.channelName, item.channelLocation, item.channelController, new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+                    }
+                   
+
+                    @*@foreach (var item in Model.ChannelList)
+        {
+
+           <li> @Html.ActionLink(item.channelName, item.channelLocation, item.channelController, new { area = "" }, new { @class = "nav-link" }) </li>
+
+
+        }*@
+                </ul>
+
+                @*@if (ViewBag.Username != null)
+                    {
+                        @Html.Partial("_LoginPartial")
+                    }*@
+                @Html.Partial("_LoginPartial")
+            </div>
+
+        </div>
+
+    </nav>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+               
+
+
+                    @if (string.IsNullOrEmpty(ViewBag.name))
+                    {
+                       
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            @foreach (var item in Model.ChannelChildList)
+                            {
+                            <li>@Html.ActionLink(item.channelChild, item.channelLocation, item.channelController, new { area = "" }, new { @class = "nav-link" })</li>
+                            }
+                        </ul>
+                    }
+                
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @*<script src="~/Scripts/multiselect-master/js/index.js"></script>*@
+</body>
+</html>

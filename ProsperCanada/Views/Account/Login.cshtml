@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<h2>Login</h2>
+
+
+<div style="margin-left: 0px;">
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        if (@ViewBag.Message != null)
+        {
+            <div id="error" style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+        <table border="0" align="center" width="640" style="margin-top:50px; background-color:lightgray; border-radius: 20px 20px 20px 20px">
+
+
+            <tr><td colspan="2"><img alt="user" src="~/Scripts/images/user1.png" width="35" height="30" style="float: left; padding-left: 0px; margin-top: 0px; line-height: 0px; padding-top: 0px;" />&nbsp;<span class="unitheaderlogin">&nbsp;</span></td></tr>
+
+            <tr bgcolor="#eeeeee"><td height="1" colspan="3"></td></tr>
+            <tr>
+                <td height="20">
+                    <span style="padding-left: 1px; font-family : arial;font-size: 11px;color:#000000; text-align: left;">This site is restricted for unauthorized user access. Any attempt to sign in, your Username and IP are logged by the system.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="padding-bottom:0px; padding-left:50px" width="100px" class="headgray">Username</td>
+            </tr>
+            <tr>
+                <td class="row" align="left" style="padding:0px 50px 0px 50px">
+                
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off" />
+                <div style="color:red" id="usernm"></div></td>
+
+            </tr>
+            <tr>
+                <td style="padding-bottom:0px;padding-left:50px" width="100px" class="headgray">Password</td>
+            </tr>
+            <tr>
+                <td class="row" align="left" style="padding:0px 50px 0px 50px">
+
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" />
+                    <div style="color:red" id="passwrd"></div>
+                </td>
+
+            </tr>
+            <tr><td height="10" style="padding-left:50px"></td></tr>
+            <tr>
+                <td colspan="2" align="left" style="padding-left:50px">
+                    <input type="submit" id="submitbtn" value="Submit" class="btn btn-primary" />
+                    <input type="hidden" id="id" name="id" value="@ViewBag.fromEmail" />
+                    <input type="hidden" id="from" name="from" value="@ViewBag.fromStatus" />
+                    <input type="hidden" id="type" name="type" value="@ViewBag.type" />
+                    <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.RUrl" />
+                    <input type="hidden" id="ipaddress" name="ipaddress" value="@ViewBag.IPAdress" />
+
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="padding-left:500px; padding-top:10px ">@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</td>
+            </tr>
+            <tr height="40px"><td></td></tr>
+            <!--<tr height="1" bgcolor="#eeeeee">
+                <td colspan="3"></td>
+
+            </tr>-->
+
+        </table>
+        <!--footer-->
+        <!--  <div align=center>
+              <table cellpacing="0" cellpacing="0" border="0" style="background-color:#ffffff" width="640">
+                  <tr>
+
+                      <td width="100%" align="left">
+                          <p style="font-family : arial;font-size: 11px;color:rgb(151, 139, 139);  text-align: right;">[A]: 3/F PSBank Center 777 Paseo de Roxas cor. Sedeño St., Makati City, 1226 PH  |  [P]: (632) 885-8208 </p>
+                          <p style="font-family : arial;font-size: 11px;color:rgb(151, 139, 139);  text-align: right;">Copyright 2018, Philippine Savings Bank. All rights reserved.</p>
+                      </td>
+                  </tr>
+              </table>
+          </div> -->
+    }
+
+    @Scripts.Render("/bundles/jquery")
+    @Scripts.Render("/bundles/bootstrap")
+</div>

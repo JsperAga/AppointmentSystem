@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "ClinicAppointmentView";
+
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<h2>ClinicAppointmentView</h2>
+
+@ViewBag.Id
+
+<div class="container body-content">
+
+    @foreach (var item in Model.ClinicSchedules)
+    {
+        <div class="row">
+            <div class="col-sm">
+                Code: @item.clinicScheduleCode
+            </div>
+
+            <div class="col-sm">
+                Day: @item.clinicDay
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                Date Start: @item.clinicDateStart
+            </div>
+
+            <div class="col-sm">
+                Date End: @item.clinicDateEnd
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                Time Start: @item.clinicTimeStart
+            </div>
+
+            <div class="col-sm">
+                Time End: @item.clinicTimeEnd
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                Capacity: @item.clinicCapacity
+            </div>
+
+
+        </div>
+
+
+    }
+    <hr />
+    @foreach (var tax in Model.ClinicScheduleTaxYears)
+    {
+        <div class="row ">
+            <div class="col-sm">
+                Tax Year: @tax.clinicTaxYearId
+            </div>
+
+        </div>
+    }
+    <hr />
+    @foreach (var lang in Model.ClinicScheduleLanguages)
+    {
+        <div class="row ">
+
+            <div class="col-sm">
+                Language: @lang.clinicLanguageId
+            </div>
+        </div>
+    }
+    <hr />
+    @foreach (var meet in Model.ClinicScheduleMeetingTypes)
+    {
+        <div class="row">
+
+
+            <div class="col-sm">
+                Meeting Type: @meet.clinicMeetingTypeId
+            </div>
+        </div>
+    }
+    <hr />
+    @foreach (var fam in Model.clinicScheduleFamilyTypes)
+    {
+        <div class="row ">
+            <div class="col-sm">
+                Meeting Type: @fam.clinicFamilyTypeId
+            </div>
+
+        </div>
+    }
+    <hr />
+</div>
+@Scripts.Render("/bundles/jquery")
+@Scripts.Render("/bundles/bootstrap")
